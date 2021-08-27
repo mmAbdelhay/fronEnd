@@ -1,14 +1,35 @@
 import React, { useState } from "react";
 import Input from "../../globalComponents/Input";
 import Button from "../../globalComponents/Button";
+import { loginAxios } from "../../../services/axoisRequests";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const login = (e) => {
+  const login = async (e) => {
     e.preventDefault();
-    console.log(email, password);
+    const [index, res] = await loginAxios({
+      email: email,
+      password: password,
+    });
+    if (index) {
+      toast.success(JSON.stringify(res.message), {
+        autoClose: 2000,
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+      sessionStorage.setItem("token", res.token);
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 2000);
+    } else {
+      toast.error(JSON.stringify(res.data), {
+        closeOnClick: true,
+        pauseOnHover: true,
+      });
+    }
   };
 
   return (
@@ -27,6 +48,7 @@ export default function Login() {
         />
         <Button text="Login" />
       </form>
+      <ToastContainer />
     </div>
   );
 }

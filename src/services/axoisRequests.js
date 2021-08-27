@@ -1,61 +1,22 @@
-import { checkIfLoggedIn } from "./checkUserStatus";
+import axios from "axios";
 import { ServerIP } from "../config/config";
 
-const getToken = async () => {
-  const token = await checkIfLoggedIn();
-  return token ? token : null;
-};
-
-export const axiosGet = async (url) => {
-  if (!(await getToken())) return false;
-
+export const registerAxios = async (payload) => {
   try {
-    const response = await axios.get(`${ServerIP}${url}`, {
-      headers: {
-        Authorization: "Token " + (await getToken()),
-      },
-    });
-    return response ? response.data : false;
+    const response = await axios.post(`${ServerIP}/auth/register`, payload);
+    return response ? [true, response.data] : false;
   } catch (err) {
-    console.error(`axios request axiosGet ${err}`);
-    return false;
+    console.log(`register error: ${err.response}`);
+    return [false, err.response];
   }
 };
 
-export const axiosPost = async (url, payload) => {
-  if (!(await getToken())) return false;
+export const loginAxios = async (payload) => {
   try {
-    const response = await axios.post(`${ServerIP}${url}`, payload, {
-      headers: { Authorization: "Token " + (await getToken()) },
-    });
-    return response ? response.data : false;
+    const response = await axios.post(`${ServerIP}/auth/login`, payload);
+    return response ? [true, response.data] : false;
   } catch (err) {
-    console.error(`axios request axiosPost ${err}`);
-    return false;
-  }
-};
-
-export const axiosPut = async (url, payload) => {
-  if (!(await getToken())) return false;
-  try {
-    const response = await axios.put(`${ServerIP}${url}`, payload, {
-      headers: { Authorization: "Token " + (await getToken()) },
-    });
-    return response ? response.data : false;
-  } catch (err) {
-    console.error(`axios request axiosPut ${err}`);
-    return false;
-  }
-};
-
-export const axiosDelete = async (url) => {
-  if (!(await getToken())) return false;
-  try {
-    const response = await axios.post(`${ServerIP}${url}`, {
-      headers: { Authorization: "Token " + (await getToken()) },
-    });
-    return response ? response.data : false;
-  } catch (err) {
-    console.error(`axios request axiosDelete ${err}`);
+    console.log(`login error: ${err.response}`);
+    return [false, err.response];
   }
 };
