@@ -1,11 +1,9 @@
-import Login from "./views/pages/login/Login";
-import Register from "./views/pages/register/Register";
+import React from "react";
 
 function App() {
   return (
     <div className="container">
-      <Login />
-      <Register />
+      <h2 className="text-center">Wellcome to our boilerplate</h2>
     </div>
   );
 }

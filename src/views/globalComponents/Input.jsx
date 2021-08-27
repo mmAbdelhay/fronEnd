@@ -5,8 +5,7 @@ export default function Input(props) {
     props.onInputChange(event.target.value);
   };
   return (
-    <div className="form-group">
-      <label>{props.label}</label>
+    <div className="form-group mt-3">
       <input
         type={props.type}
         className="form-control"
