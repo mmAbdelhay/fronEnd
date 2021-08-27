@@ -4,6 +4,13 @@ import { checkIfLoggedIn } from "../../services/checkIfLoggedIn";
 
 export default function Header() {
   const isLoggedIn = checkIfLoggedIn();
+
+  const logout = () => {
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.href = "/login";
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container-fluid">
@@ -37,7 +44,7 @@ export default function Header() {
               </Link>
             </>
           ) : (
-            <Link to="/logout" className="nav-item nav-link">
+            <Link to="/logout" className="nav-link text-light" onClick={logout}>
               logout
             </Link>
           )}
