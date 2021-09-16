@@ -1,15 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { checkIfLoggedIn } from "../../services/checkIfLoggedIn";
+import { logout } from "../../services/logout";
 
 export default function Header() {
   const isLoggedIn = checkIfLoggedIn();
-
-  const logout = () => {
-    localStorage.clear();
-    sessionStorage.clear();
-    window.location.href = "/login";
-  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">

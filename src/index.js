@@ -4,12 +4,15 @@ import { BrowserRouter as Router } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import Header from "./views/partials/Header";
 import Routes from "./routes/routes";
+import StoreProvider from "./resources/StoreProvider";
 
 ReactDOM.render(
-  <Router>
-    <Header />
-    <Routes></Routes>
-  </Router>,
+  <StoreProvider>
+    <Router>
+      <Header />
+      <Routes></Routes>
+    </Router>
+  </StoreProvider>,
   document.getElementById("root")
 );
 
